@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const fetchTodos = async () => {
     isLoading = true;
-    todos = await fetch(`${import.meta.env.VITE_API_URL}/`).then(res => res.json());
+    todos = await fetch(`/api/TodoList/`).then(res => res.json());
     isLoading = false;
     renderTodoList(todos);
   };
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const changeTodoStatus = async (id: string) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
+    await fetch(`/api/TodoList/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const updateTodoDescription = async (id: string, newText: string) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
+    await fetch(`/api/TodoList/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const addTodo = async (todoText: string) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/`, {
+    await fetch(`/api/TodoList/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const deleteTodo = async (id: string) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
+    await fetch(`/api/TodoList/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
