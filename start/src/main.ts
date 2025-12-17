@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isLoading = false;
   };
 
-  // @ts-ignore
+  // @ts-ignore - remove after implementing the api call
   const changeTodoStatus = async (id: string) => {
     // TODO: API Call to change the todo status.
     fetchTodos();
@@ -105,13 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
     calculateTodosLeft();
   };
 
-  // @ts-ignore
+  // @ts-ignore - remove after implementing the api call
   const updateTodoDescription = async (id: string, newText: string) => {
     // TODO: API Call to update the todo description.
     fetchTodos();
     renderTodoList(todos);
   }
-  // @ts-ignore
+  // @ts-ignore - remove after implementing the api call
   const addTodo = async (todoText: string) => {
     // TODO: API Call to add the new todo.
     fetchTodos();
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     calculateTodosLeft();
   }
 
-  // @ts-ignore
+  // @ts-ignore - remove after implementing the api call
   const deleteTodo = async (id: string) => {
     // TODO: API Call to delete the todo.
     fetchTodos();
