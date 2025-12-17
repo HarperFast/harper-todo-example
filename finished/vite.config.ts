@@ -5,13 +5,4 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:9926',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  }
 })

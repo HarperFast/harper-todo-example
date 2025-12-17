@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const fetchTodos = async () => {
     isLoading = true;
-    todos = await fetch(`/api/TodoList/`).then(res => res.json());
+    todos = await fetch(`/TodoList/`).then(res => res.json());
     isLoading = false;
     renderTodoList(todos);
   };
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     return parsedListItem.body.firstChild as HTMLLIElement;
   }
-
+  
   const renderTodoList = (todos: Todo[]) => {
     const todoList = document.querySelector<HTMLUListElement>('#todo-list')!;
     todoList.innerHTML = '';
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const changeTodoStatus = async (id: string) => {
-    await fetch(`/api/TodoList/${id}`, {
+    await fetch(`/TodoList/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const updateTodoDescription = async (id: string, newText: string) => {
-    await fetch(`/api/TodoList/${id}`, {
+    await fetch(`/TodoList/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const addTodo = async (todoText: string) => {
-    await fetch(`/api/TodoList/`, {
+    await fetch(`/TodoList/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const deleteTodo = async (id: string) => {
-    await fetch(`/api/TodoList/${id}`, {
+    await fetch(`/TodoList/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
