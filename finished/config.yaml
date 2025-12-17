@@ -17,7 +17,12 @@ graphqlSchema:
 jsResource:
   files: 'resources.js'
 
+'@harperdb/vite-plugin':
+  package: '@harperdb/vite-plugin'
+
 # Serve the static files from the web directory as a web application
-static:
-  files: 'dist/**'
+# static:
+#   files: 'dist/**'
   
+
+
