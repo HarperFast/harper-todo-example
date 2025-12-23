@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "harper dev .",
+    "dev": "vite dev",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "typescript": "~5.9.3",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "@harperfast/vite-plugin": "*"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.15",
