@@ -1,15 +1,16 @@
-/** Here we can define any JavaScript-based resources and extensions to tables
+// Here we can define any JavaScript-based resources and extensions to tables
+// Importing the tables available to us from the harper instance
+import { tables } from 'harperdb';
 
-export class MyCustomResource extends tables.TableName {
-  // we can define our own custom POST handler
-  post(content) {
-    // do something with the incoming content;
-    return super.post(content);
+const TodoListTable = tables.TodoList;
+
+export class TodoListResource extends TodoListTable {
+  static loadAsInstance = false; // enable the updated API
+  put(target, taskItemData) {
+    return super.put(target, taskItemData);
   }
-  // or custom GET handler
-  get() {
-    // we can modify this resource before returning
-    return super.get();
+
+  post(target, taskItemData) {
+    return super.post(target, taskItemData);
   }
 }
- */

@@ -1,0 +1,6 @@
+## TODO: Create the TodoList table
+type TodoList @table @export {
+  id: ID @primaryKey
+  status: String @index
+  description: String
+}
