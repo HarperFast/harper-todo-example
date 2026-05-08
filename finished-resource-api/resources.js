@@ -3,7 +3,6 @@ import { tables } from 'harper';
 const TodoListTable = tables.TodoList;
 
 export class TodoListResource extends TodoListTable {
-  static loadAsInstance = false; // enable the updated API
 
   put(target, taskItemData) {
     // Do something with the incoming content;
