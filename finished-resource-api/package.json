@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "harper run .",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:integration": "harper-integration-test-run 'integrationTests/**/*.test.ts'"
   },
   "devDependencies": {
+    "@harperfast/integration-testing": "^0.4.0",
     "@harperfast/vite-plugin": "^0.0.1",
     "typescript": "~5.9.3",
     "vite": "^7.1.7"

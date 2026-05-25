@@ -4,20 +4,22 @@ const TodoListTable = tables.TodoList;
 
 export class TodoListResource extends TodoListTable {
 
-  put(target, taskItemData) {
+  static async put(target, taskItemData) {
     // Do something with the incoming content;
+    const body = await taskItemData;
     return super.put(target, {
-      id: taskItemData.id,
-      description: taskItemData.description.trim(),
-      status: taskItemData.status
+      id: body.id,
+      description: body.description.trim(),
+      status: body.status
     });
   }
 
   // we can define our own custom POST handler
-  post(target, taskItemData) {
-    return post(target, {
-      description: taskItemData.description.trim(),
-      status: taskItemData.status
+  static async post(target, taskItemData) {
+    const body = await taskItemData;
+    return super.post(target, {
+      description: body.description.trim(),
+      status: body.status
     });
   }
-} 
+}

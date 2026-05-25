@@ -5,12 +5,11 @@ import { tables } from 'harper';
 const TodoListTable = tables.TodoList;
 
 export class TodoListResource extends TodoListTable {
-  static loadAsInstance = false; // enable the updated API
-  put(target, taskItemData) {
+  static async put(target, taskItemData) {
     return super.put(target, taskItemData);
   }
 
-  post(target, taskItemData) {
+  static async post(target, taskItemData) {
     return super.post(target, taskItemData);
   }
 }
