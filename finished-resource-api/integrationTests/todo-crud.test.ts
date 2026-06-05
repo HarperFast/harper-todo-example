@@ -2,6 +2,14 @@ import { suite, test, before, after } from 'node:test';
 import { strictEqual, ok } from 'node:assert/strict';
 import { setupHarperWithFixture, teardownHarper, type ContextWithHarper } from '@harperfast/integration-testing';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+import { dirname, resolve } from 'node:path';
+
+const require = createRequire(import.meta.url);
+// harper's `exports` map only exposes ".", so 'harper/dist/bin/harper.js' is not
+// directly resolvable (throws ERR_PACKAGE_PATH_NOT_EXPORTED). Resolve the CLI from
+// the exported main entry and pass it explicitly as harperBinPath.
+const harperBinPath = resolve(dirname(require.resolve('harper')), 'bin/harper.js');
 
 // Use the "finished-resource-api" directory as the fixture (parent of this integrationTests dir)
 const FIXTURE_PATH = fileURLToPath(new URL('../', import.meta.url));
@@ -14,7 +22,7 @@ function authFetch(ctx: ContextWithHarper, path: string, init: RequestInit & { h
 
 void suite('harper-todo-example', (ctx: ContextWithHarper) => {
     before(async () => {
-        await setupHarperWithFixture(ctx, FIXTURE_PATH, { startupTimeoutMs: 60000 });
+        await setupHarperWithFixture(ctx, FIXTURE_PATH, { harperBinPath, startupTimeoutMs: 60000 });
     });
 
     after(async () => {
