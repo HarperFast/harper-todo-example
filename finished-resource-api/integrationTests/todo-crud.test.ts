@@ -20,7 +20,9 @@ function authFetch(ctx: ContextWithHarper, path: string, init: RequestInit & { h
     return fetch(`${ctx.harper.httpURL}${path}`, { ...rest, headers: { Authorization: `Basic ${creds}`, ...headers } });
 }
 
-void suite('harper-todo-example', (ctx: ContextWithHarper) => {
+const ctx = {} as ContextWithHarper;
+
+void suite('harper-todo-example', () => {
     before(async () => {
         await setupHarperWithFixture(ctx, FIXTURE_PATH, { harperBinPath, startupTimeoutMs: 60000 });
     });
@@ -29,31 +31,31 @@ void suite('harper-todo-example', (ctx: ContextWithHarper) => {
         await teardownHarper(ctx);
     });
 
-    void test('PUT /TodoList/:id creates a todo item', async () => {
-        const res = await authFetch(ctx, '/TodoList/test-todo-1', {
+    void test('PUT /TodoListResource/:id creates a todo item', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/test-todo-1', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: 'test-todo-1', description: 'Test todo item', status: 'pending' }),
+            body: JSON.stringify({ id: 'test-todo-1', description: 'Test todo item', status: 'active' }),
         });
         ok([200, 201, 204].includes(res.status), `expected 200/201/204, got ${res.status}`);
     });
 
-    void test('GET /TodoList/:id retrieves the todo item', async () => {
-        const res = await authFetch(ctx, '/TodoList/test-todo-1');
+    void test('GET /TodoListResource/:id retrieves the todo item', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/test-todo-1');
         strictEqual(res.status, 200);
         const body = await res.json();
         strictEqual(body.id, 'test-todo-1');
     });
 
-    void test('GET /TodoList/ returns array', async () => {
-        const res = await authFetch(ctx, '/TodoList/');
+    void test('GET /TodoListResource/ returns array', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/');
         strictEqual(res.status, 200);
         const body = await res.json();
         ok(Array.isArray(body), `expected array, got ${JSON.stringify(body)}`);
     });
 
-    void test('DELETE /TodoList/:id removes the item', async () => {
-        const res = await authFetch(ctx, '/TodoList/test-todo-1', { method: 'DELETE' });
+    void test('DELETE /TodoListResource/:id removes the item', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/test-todo-1', { method: 'DELETE' });
         ok([200, 204].includes(res.status), `expected 200 or 204, got ${res.status}`);
     });
 });

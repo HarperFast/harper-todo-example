@@ -9,7 +9,7 @@ export class TodoListResource extends TodoListTable {
     const body = await taskItemData;
     return super.put(target, {
       id: body.id,
-      description: body.description.trim(),
+      description: body.description?.trim() ?? '',
       status: body.status
     });
   }
@@ -18,7 +18,7 @@ export class TodoListResource extends TodoListTable {
   static async post(target, taskItemData) {
     const body = await taskItemData;
     return super.post(target, {
-      description: body.description.trim(),
+      description: body.description?.trim() ?? '',
       status: body.status
     });
   }
