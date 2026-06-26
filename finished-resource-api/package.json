@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@harperfast/integration-testing": "^0.4.0",
-    "@harperfast/vite-plugin": "^0.2.1",
+    "@harperfast/vite": "^1.1.2",
     "typescript": "~5.9.3",
     "vite": "^7.1.7"
   },
