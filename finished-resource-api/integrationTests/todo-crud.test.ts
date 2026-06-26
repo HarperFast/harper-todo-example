@@ -1,0 +1,61 @@
+import { suite, test, before, after } from 'node:test';
+import { strictEqual, ok } from 'node:assert/strict';
+import { setupHarperWithFixture, teardownHarper, type ContextWithHarper } from '@harperfast/integration-testing';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+import { dirname, resolve } from 'node:path';
+
+const require = createRequire(import.meta.url);
+// harper's `exports` map only exposes ".", so 'harper/dist/bin/harper.js' is not
+// directly resolvable (throws ERR_PACKAGE_PATH_NOT_EXPORTED). Resolve the CLI from
+// the exported main entry and pass it explicitly as harperBinPath.
+const harperBinPath = resolve(dirname(require.resolve('harper')), 'bin/harper.js');
+
+// Use the "finished-resource-api" directory as the fixture (parent of this integrationTests dir)
+const FIXTURE_PATH = fileURLToPath(new URL('../', import.meta.url));
+
+function authFetch(ctx: ContextWithHarper, path: string, init: RequestInit & { headers?: Record<string, string> } = {}): Promise<Response> {
+    const { headers = {}, ...rest } = init;
+    const creds = Buffer.from(`${ctx.harper.admin.username}:${ctx.harper.admin.password}`).toString('base64');
+    return fetch(`${ctx.harper.httpURL}${path}`, { ...rest, headers: { Authorization: `Basic ${creds}`, ...headers } });
+}
+
+const ctx = {} as ContextWithHarper;
+
+void suite('harper-todo-example', () => {
+    before(async () => {
+        await setupHarperWithFixture(ctx, FIXTURE_PATH, { harperBinPath, startupTimeoutMs: 60000 });
+    });
+
+    after(async () => {
+        await teardownHarper(ctx);
+    });
+
+    void test('PUT /TodoListResource/:id creates a todo item', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/test-todo-1', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: 'test-todo-1', description: 'Test todo item', status: 'active' }),
+        });
+        ok([200, 201, 204].includes(res.status), `expected 200/201/204, got ${res.status}`);
+    });
+
+    void test('GET /TodoListResource/:id retrieves the todo item', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/test-todo-1');
+        strictEqual(res.status, 200);
+        const body = await res.json();
+        strictEqual(body.id, 'test-todo-1');
+    });
+
+    void test('GET /TodoListResource/ returns array', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/');
+        strictEqual(res.status, 200);
+        const body = await res.json();
+        ok(Array.isArray(body), `expected array, got ${JSON.stringify(body)}`);
+    });
+
+    void test('DELETE /TodoListResource/:id removes the item', async () => {
+        const res = await authFetch(ctx, '/TodoListResource/test-todo-1', { method: 'DELETE' });
+        ok([200, 204].includes(res.status), `expected 200 or 204, got ${res.status}`);
+    });
+});
