@@ -23,8 +23,8 @@ jsResource:
   output: 'dist'
 
 # Serve the static files from the web directory as a web application
-static:
-  files: 'dist/**'
+# static:
+#   files: 'dist/**'
   
 
 
