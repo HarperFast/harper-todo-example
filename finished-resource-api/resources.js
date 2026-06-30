@@ -19,7 +19,7 @@ export class TodoListResource extends TodoListTable {
     const body = await taskItemData;
     return super.post(target, {
       description: body.description?.trim() ?? '',
-      status: body.status
+      status: "active"
     });
   }
 }

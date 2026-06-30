@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       body: JSON.stringify({
         description: todoText,
-        status: "active",
       }),
     }).then(res => res.json());
     fetchTodos();

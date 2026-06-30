@@ -1,5 +1,5 @@
 ## TODO: Create the TodoList table
-type TodoList @table @export {
+type TodoList @table {
   id: ID @primaryKey
   status: String @index
   description: String
