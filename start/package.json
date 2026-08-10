@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.15",
-    "harper": "^5.1.14",
+    "harper": "^5.2.1",
     "tailwindcss": "^4.1.15"
   },
   "engines": {
